@@ -1,58 +1,64 @@
 @import "tailwindcss";
 
-@theme {
-  /* This defines your LexiTax branding colors for the whole app */
-  --color-brand-gold: #D4A017;
-  --color-brand-navy: #020617;
-}
-
 :root {
-  --background: #020617;
-  --foreground: #ffffff;
+  --border: 214 32% 91%;
+  --card: 0 0% 100%;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
+
+@theme {
+  --color-lexi-navy: #2b496c;
+  --color-lexi-grey: #676b67;
+  --color-lexi-gold-mid: #af9158;
+  --color-lexi-gold-end: #c39c55;
+  --color-lexi-accent: #d4a017;
 }
 
-/* In Tailwind v4, we define custom components like this */
-@utility landing-gradient {
-  background: radial-gradient(
-      circle at top right,
-      rgba(212, 160, 23, 0.15),
-      transparent 40%
-    ),
-    radial-gradient(
-      circle at 20% 50%,
-      rgba(30, 58, 138, 0.3),
-      transparent 50%
-    ),
-    #020617;
+/* HERO BACKGROUND */
+@utility hero-gradient {
+  background: linear-gradient(
+    110deg,
+    #254266 0%,
+    #254266 40%,
+    #254266 68%,
+    #af9158 86%,
+    #c39c55 100%
+  );
+  position: relative;
 }
 
-@utility badge-glass {
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(4px);
-  padding: 0.375rem 1rem;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  color: #d1d5db;
+
+
+/* GLOW EFFECT */
+@utility navy-glow {
+  background:
+    radial-gradient(circle at 15% 20%, rgba(43, 73, 108, 0.85), transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(195, 156, 85, 0.65), transparent 50%);
 }
 
-@utility btn-primary {
-  background-color: var(--color-brand-gold);
-  color: #0f172a;
-  font-weight: 700;
-  padding: 0.75rem 2rem;
-  border-radius: 0.5rem;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  
-  &:hover {
-    background-color: #b88a14;
-  }
+/* SUBTLE GRAIN */
+.hero-gradient::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.06) 1px,
+    transparent 1px
+  );
+  background-size: 3px 3px;
+  opacity: 0.25;
+  pointer-events: none;
 }
+.hero-gradient::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.15) 55%,
+    transparent 80%
+  );
+  pointer-events: none;
+}
+
