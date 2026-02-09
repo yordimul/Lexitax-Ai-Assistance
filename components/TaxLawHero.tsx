@@ -4,7 +4,7 @@ import SectionTransition from "./WaveTransition";
 
 export default function TaxLawHero() {
   return (
-    <section className="hero-gradient relative pt-20 pb-10 flex flex-col items-center overflow-hidden">
+    <section className="hero-gradient relative pt-20 pb-24 flex flex-col items-center overflow-hidden">
       {/* Glow Background */}
       <div className="navy-glow absolute inset-0 pointer-events-none" />
 
@@ -44,13 +44,13 @@ export default function TaxLawHero() {
           Get Started Free <ArrowRight size={18} />
         </button>
 
-        <button className="border border-white/50 text-white px-10 py-4 rounded-xl font-semibold backdrop-blur-md hover:bg-white/10 transition">
-          Try as Guest
+        <button className="border border-white/50 text-white px-10 py-4 rounded-xl font-semibold backdrop-blur-md hover:bg-white/10 transition ">
+         <a href="/chat/guest"> Try as Guest</a>
         </button>
       </div>
 
-      {/* Feature Cards */}
-      <div className="max-w-3xl w-full grid grid-cols-1 md:grid-cols-3 gap-3 px-3 relative z-30 translate-y-5 mt-0">
+     {/* Feature Cards */}
+     <div className="max-w-4xl w-full grid grid-cols-1 md:grid-cols-3 gap-4 px-3 relative z-30 mt-10">
         <HeroFeatureCard
           Icon={Scale}
           title="Legal Accuracy"
@@ -68,6 +68,7 @@ export default function TaxLawHero() {
         />
       </div>
 
+      {/* The Exact Curve from the Screenshot */}
      
     </section>
   );

@@ -29,11 +29,20 @@ export default function WhoIsLexiTaxFor() {
           Our platform is designed to serve a diverse range of users who need reliable tax law information.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 ">
           {users.map((user, i) => (
-            <div key={i} className="bg-white p-10 rounded-3xl border border-slate-100 flex flex-col items-center shadow-sm">
-              <div className="bg-slate-800 p-4 rounded-2xl mb-8">
-                <user.Icon className="text-white" size={32} />
+            <div key={i} className="group bg-white p-10 rounded-3xl
+            flex flex-col items-center
+            shadow-sm
+            border-1 border-transparent
+            transition-all duration-300 ease-out
+            hover:border-[#d7ba82]
+            active:border-[#e3b052]
+            hover:shadow-md 
+            ">
+                
+              <div className="bg-slate-800 p-4 rounded-2xl mb-8  ">
+                <user.Icon className="text-white " size={32} />
               </div>
               <h3 className="mb-4" style={{ fontFamily: "Georgia, serif", fontWeight: 700, fontSize: "24px" }}>
                 {user.title}
