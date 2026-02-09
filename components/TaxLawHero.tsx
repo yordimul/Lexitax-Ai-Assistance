@@ -41,7 +41,7 @@ export default function TaxLawHero() {
       {/* CTA Buttons */}
       <div className="flex gap-5 mb-10 z-10">
         <button className="bg-lexi-accent text-white px-10 py-4 rounded-xl font-semibold flex items-center gap-2 shadow-lg hover:shadow-xl transition-all">
-          Get Started Free <ArrowRight size={18} />
+         <a href="/register"> Get Started Free </a><ArrowRight size={18}  />
         </button>
 
         <button className="border border-white/50 text-white px-10 py-4 rounded-xl font-semibold backdrop-blur-md hover:bg-white/10 transition ">

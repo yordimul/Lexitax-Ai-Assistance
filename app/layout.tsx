@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${merriweather.variable} ${inter.variable}`}>
       <body className="antialiased bg-white">
         
-      <Navbar/>  
+       
         {children}</body>
     </html>
   );
