@@ -1,6 +1,6 @@
 import { Merriweather, Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+import { UserProvider } from "@/context/UserContext";
 
 const merriweather = Merriweather({
   subsets: ["latin"],
@@ -19,7 +19,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="antialiased bg-white">
         
        
-        {children}</body>
+      <UserProvider>
+          {children}
+        </UserProvider></body>
     </html>
   );
 }

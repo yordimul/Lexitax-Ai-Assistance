@@ -1,14 +1,17 @@
-import { Lock, MessageSquare, Plus } from "lucide-react";
+import { Lock, MessageSquare, Plus, Settings } from "lucide-react";
+import Link from "next/link";
 
 interface SidebarProps {
   isGuest: boolean;
   history?: { id: string; title: string; date: string }[];
+  // ✅ Updated to match Context: username and email
+  user?: { username: string; email: string } | null; 
 }
 
-export default function ChatSidebar({ isGuest, history }: SidebarProps) {
+export default function ChatSidebar({ isGuest, history, user }: SidebarProps) {
   return (
     <aside className="w-64 bg-[#1e2d40] text-white flex flex-col h-full">
-      {/* Top Section: Logo (Add your LexiTax logo here) */}
+      {/* Top Section: Logo */}
       <div className="p-6">
         <div className="flex items-center gap-2">
           <div className="bg-white/10 p-1 rounded">⚖️</div>
@@ -49,6 +52,22 @@ export default function ChatSidebar({ isGuest, history }: SidebarProps) {
           </div>
         )}
       </div>
+
+      {/* NEW: Manage Profile Section (Fixed to Bottom) */}
+      {!isGuest && (
+        <div className="p-4 border-t border-white/10 mt-auto">
+          <Link 
+            href="/profile" 
+            className="flex items-center gap-3 w-full p-3 rounded-lg hover:bg-white/10 transition group"
+          >
+            <Settings size={18} className="text-white/50 group-hover:text-white" />
+            <span className="text-sm font-medium text-white/70 group-hover:text-white">
+              {/* Optional: Show username here */}
+              {user?.username || "Manage Profile"}
+            </span>
+          </Link>
+        </div>
+      )}
     </aside>
   );
 }

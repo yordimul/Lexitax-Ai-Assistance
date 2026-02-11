@@ -1,18 +1,19 @@
+// 1. Updated Interface to match Context (using username)
 interface User {
-  name: string;
+  username: string; // ✅ Changed from name
   email: string;
   avatar?: string;
 }
 
 interface HeaderProps {
   isGuest: boolean;
-  user?: User | null; // This is where the dynamic name comes from
+  user?: User | null; 
   queriesLeft?: number;
 }
 
 export default function ChatHeader({ isGuest, user, queriesLeft }: HeaderProps) {
-  // We extract the first letter for the profile circle
-  const initials = user?.name ? user.name.charAt(0).toUpperCase() : "?";
+  // 2. Updated to use username
+  const initials = user?.username ? user.username.charAt(0).toUpperCase() : "?";
 
   return (
     <header className="h-16 border-b border-slate-100 flex items-center justify-between px-8 bg-white">
@@ -32,8 +33,8 @@ export default function ChatHeader({ isGuest, user, queriesLeft }: HeaderProps) 
         ) : (
           <div className="flex items-center gap-3">
             <div className="text-right">
-              {/* This is now dynamic! */}
-              <p className="text-sm font-bold text-slate-800">{user.name}</p>
+              {/* 3. Updated to display username */}
+              <p className="text-sm font-bold text-slate-800">{user.username}</p>
             </div>
             <div className="w-10 h-10 bg-[#1e2d40] text-white rounded-full flex items-center justify-center font-bold">
               {initials}
