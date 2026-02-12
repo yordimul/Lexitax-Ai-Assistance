@@ -1,7 +1,7 @@
 // context/UserContext.tsx
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, ReactNode , useEffect } from "react";
 
 // 1. Define the user structure including email
 type User = {
@@ -18,11 +18,30 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
 	const [user, setUser] = useState<User | null>(null);
+	const [loading, setLoading] = useState(true); // Add loading state
+	useEffect(() => {
+		const checkSession = async () => {
+		  try {
+			const response = await fetch("/api/auth/me");
+			const data = await response.json();
+			
+			if (data.user) {
+			  setUser(data.user);
+			}
+		  } catch (error) {
+			console.error("Session check failed", error);
+		  } finally {
+			setLoading(false);
+		  }
+		};
+	
+		checkSession();
+	  }, []);
 
 	return (
 		<UserContext.Provider value={{ user, setUser }}>
-			{children}
-		</UserContext.Provider>
+      {!loading && children} {/* Only render children when loading is done */}
+    </UserContext.Provider>
 	);
 }
 

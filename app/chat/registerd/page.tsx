@@ -31,7 +31,7 @@ export default function RegisteredChat() {
              {/* Dynamic greeting using user.username */}
              How can I help you today, {user ? user.username : "User"}?
            </h2>
-           <p className="text-slate-500">Ask any question about Nigerian tax law.</p>
+           <p className="text-slate-500">Ask any question about ethiopian  tax law.</p>
         </div>
 
         <ChatInput />
