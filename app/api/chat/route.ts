@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
-import Chat from '@/model/Chat';
+import Chat from '@/model/Chat'; // ⬅️ Ensure this model exists
 import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 
@@ -21,27 +21,50 @@ export async function POST(req: Request) {
     const decoded: any = jwt.verify(token, JWT_SECRET);
     const userId = decoded.userId;
 
-    // 2. Get chat data from request
+    // 2. Get chat data
     const { chatId, message, title } = await req.json();
 
+    if (!message) {
+      return NextResponse.json({ error: "Message is required" }, { status: 400 });
+    }
+
+    // 3. Simulate an AI response
+    const simulatedAIResponse = `Simulated response to: "${message}"`;
+
+    // 4. Save to Database
     let chat;
     if (chatId) {
-      // If chatId exists, append message to existing chat
+      // Append to existing chat
       chat = await Chat.findByIdAndUpdate(
         chatId,
-        { $push: { messages: { role: 'user', content: message } } },
+        { 
+          $push: { 
+            messages: [
+                { role: 'user', content: message },
+                { role: 'assistant', content: simulatedAIResponse }
+            ] 
+          } 
+        },
         { new: true }
       );
     } else {
-      // Otherwise, create a new chat
+      // Create new chat
       chat = await Chat.create({
         userId,
-        title: title || "New Conversation",
-        messages: [{ role: 'user', content: message }],
+        title: title || message.substring(0, 30) + "...", 
+        messages: [
+            { role: 'user', content: message },
+            { role: 'assistant', content: simulatedAIResponse }
+        ],
       });
     }
 
-    return NextResponse.json({ success: true, chat });
+    // 5. Return the simulated response and the new chat ID
+    return NextResponse.json({ 
+        success: true, 
+        response: simulatedAIResponse,
+        chatId: chat._id 
+    });
 
   } catch (error) {
     console.error("Save chat error:", error);
