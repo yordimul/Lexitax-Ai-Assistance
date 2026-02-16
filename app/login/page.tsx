@@ -3,6 +3,7 @@ import { Eye, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/context/UserContext";
 
 export default function LoginPage() {
 	// 2. State management
@@ -10,6 +11,7 @@ export default function LoginPage() {
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
 	const router = useRouter();
+	const { checkSession } = useUser();
 
 	const handleLogin = async (e: React.FormEvent) => {
 		e.preventDefault();
@@ -30,7 +32,7 @@ export default function LoginPage() {
 			if (!response.ok) {
 				throw new Error(data.error || "Login failed");
 			}
-
+			await checkSession();
 			// 4. Success! Redirect to the registered chat page
 			router.push("/chat/registerd");
 			router.refresh(); // Refresh to update context/session

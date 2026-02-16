@@ -1,7 +1,7 @@
 // context/UserContext.tsx
 "use client";
 
-import { createContext, useContext, useState, ReactNode , useEffect } from "react";
+import { useCallback ,createContext, useContext, useState, ReactNode , useEffect } from "react";
 
 // 1. Define the user structure including email
 type User = {
@@ -10,8 +10,9 @@ type User = {
 };
 
 type UserContextType = {
-	user: User | null;
-	setUser: (user: User | null) => void;
+    user: User | null;
+    setUser: (user: User | null) => void;
+    checkSession: () => Promise<void>; // ✅ Add this
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -19,30 +20,34 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export function UserProvider({ children }: { children: ReactNode }) {
 	const [user, setUser] = useState<User | null>(null);
 	const [loading, setLoading] = useState(true); // Add loading state
-	useEffect(() => {
-		const checkSession = async () => {
-		  try {
-			const response = await fetch("/api/auth/me");
-			const data = await response.json();
-			
-			if (data.user) {
-			  setUser(data.user);
-			}
-		  } catch (error) {
-			console.error("Session check failed", error);
-		  } finally {
-			setLoading(false);
-		  }
-		};
-	
-		checkSession();
-	  }, []);
+	const checkSession = useCallback(async () => {
+        try {
+            const response = await fetch("/api/auth/me");
+            const data = await response.json();
+            
+            if (data.user) {
+                setUser(data.user);
+            } else {
+                setUser(null); // Explicitly set to null if not logged in
+            }
+        } catch (error) {
+            console.error("Session check failed", error);
+            setUser(null);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
 
-	return (
-		<UserContext.Provider value={{ user, setUser }}>
-      {!loading && children} {/* Only render children when loading is done */}
-    </UserContext.Provider>
-	);
+    useEffect(() => {
+        checkSession();
+    }, [checkSession]);
+
+    // ✅ Add checkSession to the provider value
+    return (
+        <UserContext.Provider value={{ user, setUser, checkSession }}>
+            {!loading && children}
+        </UserContext.Provider>
+    );
 }
 
 export function useUser() {
